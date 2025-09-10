@@ -15,7 +15,7 @@ export async function GET(_req: NextRequest, ctx: RouteContext<"/api/lenses/[sku
 
     if(!lense)  return Response.json({ error: "Not found" }, { status: 404 });
 
-    return Response.json({ data: lense });
+    return Response.json({ data: lense }, { status: 200 });
   } catch (error: any) {
     console.error("GET /lense/[sku] failed", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });

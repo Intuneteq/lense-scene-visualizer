@@ -15,7 +15,7 @@ export async function GET() {
       sku: l.sku,
     }));
 
-    return Response.json({ data: lenses });
+    return Response.json({ data: lenses }, { status: 200 });
   } catch (error: any) {
     console.error("GET /lenses failed", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });

@@ -11,7 +11,7 @@ export async function GET() {
       name: renegades.name,
     };
 
-    return Response.json({ data: product });
+    return Response.json({ data: product }, { status: 200 });
   } catch (error: any) {
     console.error("GET /product failed", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
