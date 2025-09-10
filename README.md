@@ -68,10 +68,3 @@ For a detailed explanation of **technology choices, backend/frontend architectur
 * Node.js **>=18**
 * npm or yarn
 * Next.js (installed via dependencies)
-
-
-TODO 
-- BACKGROUND UI and select icon svg
-- swrap swr in a hook
-- favicon
-- 

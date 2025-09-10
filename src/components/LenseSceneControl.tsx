@@ -9,18 +9,28 @@ import { Lense } from '@models/lense.model'
 import { getLenses } from '@actions/lenses.action'
 import { searchParamsSchema } from '@utils/validations'
 
-export default function LenseSceneControl() {
+type Props = {
+   initialSku?: string;
+   initialScene?: string;
+}
+
+export default function LenseSceneControl({ initialSku, initialScene }: Props) {
    const router = useRouter()
    const pathname = usePathname()
    const searchParams = useSearchParams()
 
-   const paramsObj = useMemo(
-      () => ({
-         sku: searchParams.get('sku') || undefined,
-         sceneType: searchParams.get('sceneType') || undefined,
-      }),
-      [searchParams]
-   )
+  const initialParsed = searchParamsSchema.safeParse({
+    sku: initialSku,
+    sceneType: initialScene,
+  });
+
+  const paramsObj = useMemo(
+    () => ({
+      sku: searchParams?.get("sku") || initialParsed.data?.sku,
+      sceneType: searchParams?.get("sceneType") || initialParsed.data?.sceneType,
+    }),
+    [searchParams, initialParsed.data]
+  );
 
    const parsed = searchParamsSchema.safeParse(paramsObj)
    const selectedLense = parsed.data?.sku
