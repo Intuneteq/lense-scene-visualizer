@@ -1,5 +1,7 @@
 'use client'
+
 import React from 'react'
+import { Loader2 } from "lucide-react";
 import { Select, SelectItem } from "@heroui/select";
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 
@@ -12,15 +14,22 @@ type Props = {
    id: string
    name: string
    options: SelectorType[]
+   isLoading?: boolean
+   value?: string
    onChange: (key: string) => void
 }
 
-export default function Selector({ id, name, options, onChange }: Props) {
+export default function Selector({ id, name, onChange, options, value, isLoading = false }: Props) {
    return (
       <Select
+         selectedKeys={value ? [value] : []}
+         onSelectionChange={(keys) => {
+            const selected = Array.from(keys)[0] as string
+            onChange(selected)
+         }}
+         spinnerProps={{ size: 'lg' }}
          id={id}
          name={name}
-         onChange={(e) => onChange(e.target.value)}
          selectorIcon={<ChevronDownIcon />}
          classNames={{
             trigger:
@@ -33,18 +42,28 @@ export default function Selector({ id, name, options, onChange }: Props) {
                'w-5 h-5 text-[#898989] transition-transform duration-200 data-[open=true]:rotate-180 relative right-0',
          }}
       >
-         {options.map((option) => (
+         {isLoading ? (
             <SelectItem
-               key={option.key}
-               className={`
-            relative flex items-center justify-between p-2 rounded-sm
-            data-[hover=true]:bg-gray-100
-            data-[selected=true]:bg-purple-50
-          `}
+               key="loading"
+               className="flex items-center justify-center p-2 text-gray-500 cursor-not-allowed"
             >
-               {option.label}
+               <Loader2 className="animate-spin mr-2 w-4 h-4" />
+               Loading...
             </SelectItem>
-         ))}
+         ) : (
+            options.map((option) => (
+               <SelectItem
+                  key={option.key}
+                  className={`
+                     relative flex items-center justify-between p-2 rounded-sm
+                     data-[hover=true]:bg-gray-100
+                     data-[selected=true]:bg-purple-50
+                  `}
+               >
+                  {option.label}
+               </SelectItem>
+            ))
+         )}
       </Select>
    )
 }

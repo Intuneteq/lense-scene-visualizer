@@ -1,50 +1,19 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
-import type { ImageTyPe } from '@models/image.model'
 import { Divider } from '@heroui/divider'
+import { useState, useRef, useEffect } from 'react'
 
-import nakedEyeImageDefault from '@assets/naked-eye-image.png'
-import sceneImageDefault from '@assets/scene-image.png'
+import type { ImageTyPe } from '@models/image.model'
 
 type Props = {
-  nakedEyeImage?: ImageTyPe
-  sceneImage?: ImageTyPe
+  leftImage: ImageTyPe
+  rightImage: ImageTyPe
 }
 
-export default function ImageCompare({ nakedEyeImage, sceneImage }: Props) {
+export default function ImageCompare({ leftImage, rightImage }: Props) {
+  const [dividerX, setDividerX] = useState(50) 
   const containerRef = useRef<HTMLDivElement>(null)
-  const [dividerX, setDividerX] = useState(50) // default middle
-
-  // Fallback to default imports if props aren't provided
-  const leftImage = nakedEyeImage ?? {
-    id: 'default-naked-eye',
-    responsiveImage: {
-      src: nakedEyeImageDefault.src,
-      width: nakedEyeImageDefault.width,
-      height: nakedEyeImageDefault.height,
-      srcSet: '',
-      webpSrcSet: '',
-      sizes: '',
-      aspectRatio: nakedEyeImageDefault.width / nakedEyeImageDefault.height,
-      base64: '',
-    },
-  }
-
-  const rightImage = sceneImage ?? {
-    id: 'default-scene',
-    responsiveImage: {
-      src: sceneImageDefault.src,
-      width: sceneImageDefault.width,
-      height: sceneImageDefault.height,
-      srcSet: '',
-      webpSrcSet: '',
-      sizes: '',
-      aspectRatio: sceneImageDefault.width / sceneImageDefault.height,
-      base64: '',
-    },
-  }
 
   // handle drag state
   const isDragging = useRef(false)

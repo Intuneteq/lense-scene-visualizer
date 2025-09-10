@@ -1,6 +1,5 @@
 import z from "zod";
 import { ImageSchema } from "./image.validation";
-import { LensSKUSchema } from "./lense.validation";
 
 export const RawSceneSchema = z.object({
   sceneName: z.enum(["Mountain", "Road", "Beach"]),
