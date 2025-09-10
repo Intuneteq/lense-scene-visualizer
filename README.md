@@ -73,6 +73,5 @@ For a detailed explanation of **technology choices, backend/frontend architectur
 TODO 
 - BACKGROUND UI and select icon svg
 - swrap swr in a hook
-- dont reset state of scene when lense change 
 - favicon
 - 

@@ -1,9 +1,10 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image';
 import { Loader2 } from "lucide-react";
 import { Select, SelectItem } from "@heroui/select";
-import { ChevronDownIcon } from '@heroicons/react/24/solid';
+import DropDownSvg from '@assets/svgs/drop-down-svg.svg'
 
 export type SelectorType = {
    key: string
@@ -31,7 +32,7 @@ export default function Selector({ id, name, onChange, options, value, isLoading
             onChange(selected)
          }}
          spinnerProps={{ size: 'lg' }}
-         selectorIcon={<ChevronDownIcon />}
+         selectorIcon={<Image src={DropDownSvg} alt="Dropdown" width={8} height={8} />}
          classNames={{
             trigger:
                'cursor-pointer border border-[#898989] rounded-sm px-4 w-full max-w-[19.1875rem] h-9 text-sm text-black flex items-center justify-between relative',
@@ -40,7 +41,7 @@ export default function Selector({ id, name, onChange, options, value, isLoading
             listbox:
                'text-black text-sm py-0 no-scrollbar',
             selectorIcon:
-               'w-5 h-5 text-[#898989] transition-transform duration-200 data-[open=true]:rotate-180 relative right-0',
+               'w-3 h-3 text-[#898989] transition-transform duration-200 data-[open=true]:rotate-180 relative right-0',
          }}
       >
          {isLoading ? (
