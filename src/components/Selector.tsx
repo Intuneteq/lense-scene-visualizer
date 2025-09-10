@@ -22,14 +22,15 @@ type Props = {
 export default function Selector({ id, name, onChange, options, value, isLoading = false }: Props) {
    return (
       <Select
-         selectedKeys={value ? [value] : []}
+         id={id}
+         name={name}
+         aria-label={name}
+         selectedKeys={value && options.length ? [value] : []}
          onSelectionChange={(keys) => {
             const selected = Array.from(keys)[0] as string
             onChange(selected)
          }}
          spinnerProps={{ size: 'lg' }}
-         id={id}
-         name={name}
          selectorIcon={<ChevronDownIcon />}
          classNames={{
             trigger:
@@ -45,6 +46,7 @@ export default function Selector({ id, name, onChange, options, value, isLoading
          {isLoading ? (
             <SelectItem
                key="loading"
+               textValue="Loading"
                className="flex items-center justify-center p-2 text-gray-500 cursor-not-allowed"
             >
                <Loader2 className="animate-spin mr-2 w-4 h-4" />
@@ -54,6 +56,7 @@ export default function Selector({ id, name, onChange, options, value, isLoading
             options.map((option) => (
                <SelectItem
                   key={option.key}
+                  textValue={option.label}
                   className={`
                      relative flex items-center justify-between p-2 rounded-sm
                      data-[hover=true]:bg-gray-100
