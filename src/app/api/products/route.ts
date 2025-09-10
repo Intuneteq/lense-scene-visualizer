@@ -11,6 +11,7 @@ export async function GET() {
     const renegades = RawProductSchema.parse(productData.renegades);
     const rawLensePart = renegades.parts.find((part) => part.name === 'Lenses');
     const lensePart = RawLensePartSchema.parse(rawLensePart);
+    
     const scenes = RawSceneArraySchema.parse(sceneData);
     const scenesMap = buildLensSceneMap(scenes);
 
@@ -21,7 +22,7 @@ export async function GET() {
         id: lense.id,
         name: lense.name,
         sku: lense.sku,
-        scenes: scenesMap.get(lense.sku) || [],
+        // scenes: scenesMap.get(lense.sku) || [],
       })),
     };
 

@@ -1,11 +1,10 @@
 import z from "zod";
-import { LensSKUSchema } from "./lense.validation";
 
 // Schema for a single option inside "Lenses"
 export const RawLensOptionSchema = z.object({
   id: z.string(),
   name: z.string(),
-  sku: LensSKUSchema, // runtime validation of SKU
+  sku: z.string(), 
 });
 
 // Schema for a product parts 

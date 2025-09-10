@@ -6,7 +6,7 @@ export const RawSceneSchema = z.object({
   sceneName: z.enum(["Mountain", "Road", "Beach"]),
   nakedEyeImage: ImageSchema,
   sceneImages: z.record(
-    LensSKUSchema,
+    z.string(),
     z.object({
       image: ImageSchema,
       lensType: z.string(),
