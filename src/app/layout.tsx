@@ -28,13 +28,13 @@ export default function RootLayout({ controls, previews }: Readonly<Props>) {
     <html lang="en" suppressHydrationWarning={true}>
       <body
         suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} bg-background`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-gray-900`}
       >
-        <main className="w-full flex justify-start items-start">
-          <aside className="w-[30%] border-r border-gray-200 h-screen">
+        <main className="w-full flex justify-start items-start p-3 bg-gray-900 overflow-hidden">
+          <aside className="w-[30%] border-r border-gray-200 h-screen bg-background rounded-l-lg">
             {controls}
           </aside>
-          <section className="w-[70%] bg-background h-screen relative">
+          <section className="w-[70%] bg-background h-screen relative rounded-r-lg overflow-hidden">
             {previews}
           </section>
         </main>
