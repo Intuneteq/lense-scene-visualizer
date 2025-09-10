@@ -58,26 +58,27 @@ export default function ImageCompare({ leftImage, rightImage }: Props) {
         <Image
           priority
           src={leftImage.responsiveImage.src}
-          alt={leftImage.responsiveImage.alt || "Naked eye view"}
+          alt={leftImage.responsiveImage.alt || 'Naked eye view'}
           width={leftImage.responsiveImage.width}
           height={leftImage.responsiveImage.height}
           className="h-full w-full object-cover"
         />
       </div>
 
-      {/* Divider */}
+      {/* Divider + Handle */}
       <div
         onMouseDown={handleMouseDown}
-        className="absolute top-0 bottom-0 cursor-grabbing"
+        className="absolute top-0 bottom-0 cursor-grab active:cursor-grabbing flex flex-col items-center"
         style={{
           left: `${dividerX}%`,
           transform: 'translateX(-50%)',
         }}
       >
-        <Divider
-          orientation="vertical"
-          className="w-0.5 bg-white h-full"
-        />
+        <Divider orientation="vertical" className="w-0.5 bg-white h-full" />
+        {/* Circle handle */}
+        <div className="absolute top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white shadow-md border border-gray-300 flex items-center justify-center">
+          <div className="w-2 h-2 rounded-full bg-gray-500" />
+        </div>
       </div>
 
       {/* Right (scene) */}
@@ -88,7 +89,7 @@ export default function ImageCompare({ leftImage, rightImage }: Props) {
         <Image
           priority
           src={rightImage.responsiveImage.src}
-          alt={rightImage.responsiveImage.alt || "Scene view"}
+          alt={rightImage.responsiveImage.alt || 'Scene view'}
           width={rightImage.responsiveImage.width}
           height={rightImage.responsiveImage.height}
           className="h-full w-full object-cover"
