@@ -1,5 +1,4 @@
 import { ImageTyPe } from "./image.model";
-import { LensSKU } from "./lense-sku.model";
 
 export type SceneType = "Mountain" | "Road" | "Beach"
 
@@ -9,4 +8,4 @@ export type Scene = {
   sceneImage: ImageTyPe;
 };
 
-export type SceneImageType = [LensSKU, { image: ImageTyPe }];
+export type SceneImageType = [string, { image: ImageTyPe }];

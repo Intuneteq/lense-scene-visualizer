@@ -1,3 +1,4 @@
+import config from "./app";
 import { catchError, createFailure, createSuccess } from "./result";
 
 async function customFetch<T>(endpoint: string, options: FetchOptions): Promise<Result<T>> {
@@ -8,7 +9,7 @@ async function customFetch<T>(endpoint: string, options: FetchOptions): Promise<
   }
 
   const [error, response] = await catchError(
-    fetch(`http://localhost:3000/api${endpoint}`, { ...restOptions, body, headers: { ...options.headers  }, credentials: "include" })
+    fetch(`${config.baseUrl}${endpoint}`, { ...restOptions, body, headers: { ...options.headers  }, credentials: "include" })
   );
 
   if (error || !response?.ok) {
