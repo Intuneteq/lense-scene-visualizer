@@ -27,6 +27,7 @@ export default function RootLayout({ controls, previews }: Readonly<Props>) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} bg-background`}
       >
         <main className="w-full flex justify-start items-start">

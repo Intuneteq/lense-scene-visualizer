@@ -56,6 +56,7 @@ export default function ImageCompare({ leftImage, rightImage }: Props) {
         style={{ width: `${dividerX}%` }}
       >
         <Image
+          priority
           src={leftImage.responsiveImage.src}
           alt={leftImage.responsiveImage.alt || "Naked eye view"}
           width={leftImage.responsiveImage.width}
@@ -85,6 +86,7 @@ export default function ImageCompare({ leftImage, rightImage }: Props) {
         style={{ width: `${100 - dividerX}%` }}
       >
         <Image
+          priority
           src={rightImage.responsiveImage.src}
           alt={rightImage.responsiveImage.alt || "Scene view"}
           width={rightImage.responsiveImage.width}
