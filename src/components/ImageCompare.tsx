@@ -12,7 +12,7 @@ type Props = {
 }
 
 export default function ImageCompare({ leftImage, rightImage }: Props) {
-  const [dividerX, setDividerX] = useState(50) 
+  const [dividerX, setDividerX] = useState(50)
   const containerRef = useRef<HTMLDivElement>(null)
 
   // handle drag state
@@ -57,7 +57,7 @@ export default function ImageCompare({ leftImage, rightImage }: Props) {
       >
         <Image
           src={leftImage.responsiveImage.src}
-          alt="Naked eye view"
+          alt={leftImage.responsiveImage.alt || "Naked eye view"}
           width={leftImage.responsiveImage.width}
           height={leftImage.responsiveImage.height}
           className="h-full w-full object-cover"
@@ -86,7 +86,7 @@ export default function ImageCompare({ leftImage, rightImage }: Props) {
       >
         <Image
           src={rightImage.responsiveImage.src}
-          alt="Scene view"
+          alt={rightImage.responsiveImage.alt || "Scene view"}
           width={rightImage.responsiveImage.width}
           height={rightImage.responsiveImage.height}
           className="h-full w-full object-cover"

@@ -1,9 +1,9 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { SearchX, Home, ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
+import { SearchX, Home, ArrowLeft } from "lucide-react"
 
 export default function NotFound() {
   const router = useRouter()

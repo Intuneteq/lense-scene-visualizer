@@ -1,16 +1,15 @@
 "use client"
 
+import Link from "next/link"
 import { motion } from "framer-motion"
 import { AlertTriangle, RotateCcw, Home } from "lucide-react"
-import Link from "next/link"
 
-export default function Error({
-   error,
-   reset,
-}: {
+type Props = {
    error: Error
    reset: () => void
-}) {
+}
+
+export default function Error({ error, reset }: Props) {
    return (
       <div className="flex h-screen w-full items-center justify-center bg-white">
          <motion.div

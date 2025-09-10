@@ -5,8 +5,8 @@ import { useMemo } from "react"
 import { useSearchParams } from "next/navigation"
 
 import { ImageCompare } from "@components"
-import PreviewLoading from "./PreviewLoading"
 import EmptySelection from "./EmptySelection"
+import PreviewLoading from "./PreviewLoading"
 
 import { getScene } from "@actions/scenes.action"
 import { searchParamsSchema } from "@utils/validations"
@@ -30,9 +30,7 @@ export default function ScenePreview() {
   }
 
   const { sku, sceneType } = parsed.data
-
   const url = sku && sceneType ? [`/lenses/${sku}/scenes/${sceneType}`, sku, sceneType] : null
-
   const { data, error, isLoading } = useSWR<Scene>(url, () => getScene(sku as string, sceneType as SceneType))
 
   if (isLoading) {

@@ -27,8 +27,7 @@ export default function LenseSceneControl() {
    const selectedScene = parsed.data?.sceneType
 
    const { data, isLoading } = useSWR<Lense[]>(`/lenses`, getLenses)
-   const lensesOptions =
-      data?.map((lense) => ({ key: lense.sku, label: lense.name })) || []
+   const lensesOptions = data?.map((lense) => ({ key: lense.sku, label: lense.name })) || []
 
    function handleSelectLense(key: string) {
       router.replace(`${pathname}?sku=${key}`)
