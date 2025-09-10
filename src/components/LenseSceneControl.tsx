@@ -30,7 +30,7 @@ export default function LenseSceneControl() {
    const lensesOptions = data?.map((lense) => ({ key: lense.sku, label: lense.name })) || []
 
    function handleSelectLense(key: string) {
-      router.replace(`${pathname}?sku=${key}`)
+      router.replace(`${pathname}?sku=${key}&sceneType=${selectedScene || 'Mountain'}`)
    }
 
    function handleSelectScene(sceneType: string) {
