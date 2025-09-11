@@ -19,18 +19,17 @@ export default function LenseSceneControl({ initialSku, initialScene }: Props) {
    const pathname = usePathname()
    const searchParams = useSearchParams()
 
-  const initialParsed = searchParamsSchema.safeParse({
-    sku: initialSku,
-    sceneType: initialScene,
-  });
-
-  const paramsObj = useMemo(
-    () => ({
-      sku: searchParams?.get("sku") || initialParsed.data?.sku,
-      sceneType: searchParams?.get("sceneType") || initialParsed.data?.sceneType,
-    }),
-    [searchParams, initialParsed.data]
-  );
+   // Now, merge live client params (reactive) with server initial values (stable).
+   // This way:
+   // - On first render → uses server defaults (SSR-safe).
+   // - After hydration → automatically syncs with actual client URL.
+   const paramsObj = useMemo(
+      () => ({
+         sku: searchParams?.get("sku") || initialSku,
+         sceneType: searchParams?.get("sceneType") || initialScene,
+      }),
+      [searchParams, initialScene, initialSku]
+   );
 
    const parsed = searchParamsSchema.safeParse(paramsObj)
    const selectedLense = parsed.data?.sku
@@ -39,6 +38,9 @@ export default function LenseSceneControl({ initialSku, initialScene }: Props) {
    const { data, isLoading } = useSWR<Lense[]>(`/lenses`, getLenses)
    const lensesOptions = data?.map((lense) => ({ key: lense.sku, label: lense.name })) || []
 
+   // Update URL as the single source of truth
+   // - router.replace keeps navigation shallow (no new history entry)
+   // - ensures URL always matches current state
    function handleSelectLense(key: string) {
       router.replace(`${pathname}?sku=${key}&sceneType=${selectedScene || 'Mountain'}`)
    }
