@@ -1,8 +1,8 @@
-import React from 'react'
-import { EmptySelection } from '@components'
+'use client'
+import { SceneNotFound } from '@components'
 
 export default function NotFound() {
   return (
-    <EmptySelection />
+    <SceneNotFound />
   )
 }

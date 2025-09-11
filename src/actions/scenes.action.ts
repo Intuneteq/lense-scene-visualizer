@@ -11,8 +11,10 @@ export async function getScenes(sku: string): Promise<Scene[]> {
   return res.data;
 }
 
-export async function getScene(sku: string, name: SceneType): Promise<Scene> {
+export async function getScene(sku: string, name: SceneType): Promise<Scene | null> {
   const res = await Get<Scene>(`/lenses/${sku}/scenes/${name}`);
+
+  if (res.code === 404) return null;
 
   if (res.code >= 400) {
     throw new Error(res.message);

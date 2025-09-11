@@ -13,7 +13,7 @@ export default function PreviewLoading() {
         <Loader2 size={48} />
       </motion.div>
 
-      <p className="mt-4 text-sm text-white">
+      <p className="mt-4 text-sm text-black">
         Adjusting your lens view...
       </p>
     </div>

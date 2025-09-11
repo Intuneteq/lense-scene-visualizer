@@ -24,6 +24,8 @@ export async function GET(_req: NextRequest, ctx: RouteContext<"/api/lenses/[sku
     const scenes = scenesMap.get(sku) || [];
 
     const scene = scenes.find((sc) => sc.name === name);
+    
+    if(!scene) return Response.json({ error: "scene not found" }, { status: 404 });
 
     return Response.json({ data: scene }, { status: 200 });
   } catch (error: any) {

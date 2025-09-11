@@ -24,10 +24,6 @@ async function customFetch<T>(endpoint: string, options: FetchOptions): Promise<
 
   // Handle error or non-OK response
   if (error || !response?.ok) {
-    if (response?.status === 404) {
-      return createFailure<T>({ message: "route not found" });
-    }
-
     // Try to parse error response if available
     const errorData = error ? error : { ...(await response?.json()), status: response?.status };
 

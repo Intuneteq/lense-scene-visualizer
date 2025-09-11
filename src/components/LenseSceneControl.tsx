@@ -53,6 +53,7 @@ export default function LenseSceneControl({ initialSku, initialScene }: Props) {
             id="lenses"
             name="lenses"
             value={selectedLense}
+            placeholder='Select Lense'
             options={lensesOptions}
             onChange={handleSelectLense}
             isLoading={isLoading}
@@ -61,6 +62,7 @@ export default function LenseSceneControl({ initialSku, initialScene }: Props) {
          <Selector
             id="scene"
             name="scene"
+            placeholder='Select Scene'
             value={selectedScene}
             options={selectedLense ? scenesOptions : []}
             onChange={handleSelectScene}

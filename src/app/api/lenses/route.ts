@@ -8,13 +8,7 @@ export async function GET() {
     const renegades = RawProductSchema.parse(productData.renegades);
     const rawLensePart = renegades.parts.find((part) => part.name === "Lenses");
     const lensePart = RawLensePartSchema.parse(rawLensePart);
-
-    const lenses: Lense[] = lensePart.options.map((l) => ({
-      id: l.id,
-      name: l.name,
-      sku: l.sku,
-    }));
-
+    const lenses: Lense[] = lensePart.options.map(({ id, name, sku }) => ({ id, name, sku }));
     return Response.json({ data: lenses }, { status: 200 });
   } catch (error: any) {
     console.error("GET /lenses failed", error);

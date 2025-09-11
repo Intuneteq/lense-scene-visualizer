@@ -17,15 +17,17 @@ type Props = {
    options: SelectorType[]
    isLoading?: boolean
    value?: string
+   placeholder?: string
    onChange: (key: string) => void
 }
 
-export default function Selector({ id, name, onChange, options, value, isLoading = false }: Props) {
+export default function Selector({ id, name, onChange, options, value, placeholder, isLoading = false }: Props) {
    return (
       <Select
          id={id}
          name={name}
          aria-label={name}
+         placeholder={placeholder}
          selectedKeys={value && options.length ? [value] : []}
          onSelectionChange={(keys) => {
             const selected = Array.from(keys)[0] as string
