@@ -10,5 +10,5 @@ type Props = {
 
 export default function ScenePreview({ scene }: Props) {
   if (!scene) return <SceneNotFound />
-  return <ImageCompare leftImage={scene.nakedEyeImage} rightImage={scene.sceneImage} />
+  return <ImageCompare nakedEyeImage={scene.nakedEyeImage} seceneImage={scene.sceneImage} />
 }

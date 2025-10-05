@@ -3,42 +3,50 @@
 import Image from 'next/image'
 import { Divider } from '@heroui/divider'
 import { useState, useRef, useEffect } from 'react'
-
 import type { ImageTyPe } from '@models/image.model'
 
 type Props = {
-  leftImage: ImageTyPe
-  rightImage: ImageTyPe
+  nakedEyeImage: ImageTyPe
+  seceneImage: ImageTyPe
 }
 
-export default function ImageCompare({ leftImage, rightImage }: Props) {
+export default function ImageCompare({ nakedEyeImage, seceneImage }: Props) {
   const [dividerX, setDividerX] = useState(50)
   const containerRef = useRef<HTMLDivElement>(null)
-
-  // handle drag state
   const isDragging = useRef(false)
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault()
     isDragging.current = true
+    document.body.style.userSelect = 'none'
   }
 
   const handleMouseUp = () => {
     isDragging.current = false
+    document.body.style.userSelect = 'auto'
   }
 
   const handleMouseMove = (e: MouseEvent) => {
     if (!isDragging.current || !containerRef.current) return
+    e.preventDefault()
 
     const rect = containerRef.current.getBoundingClientRect()
     const x = e.clientX - rect.left
-    const newPercentage = Math.max(0, Math.min(100, (x / rect.width) * 100))
+    const newPercentage = Math.max(5, Math.min(100, (x / rect.width) * 100))
+    setDividerX(newPercentage)
+  }
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return
+    const rect = containerRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const newPercentage = Math.max(5, Math.min(100, (x / rect.width) * 100))
     setDividerX(newPercentage)
   }
 
   useEffect(() => {
     window.addEventListener('mousemove', handleMouseMove)
     window.addEventListener('mouseup', handleMouseUp)
-
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseup', handleMouseUp)
@@ -48,52 +56,58 @@ export default function ImageCompare({ leftImage, rightImage }: Props) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-screen overflow-hidden flex"
+      onClick={handleClick}
+      className="relative w-full h-screen overflow-hidden select-none cursor-pointer"
     >
-      {/* Left (naked eye) */}
+      {/* Bottom layer: Scene image */}
+      <Image
+        priority
+        src={seceneImage.responsiveImage.src}
+        alt={seceneImage.responsiveImage.alt || 'Scene view'}
+        width={seceneImage.responsiveImage.width}
+        height={seceneImage.responsiveImage.height}
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+
+      {/* Top layer: Naked-eye image (clipped) */}
       <div
-        className="h-full overflow-hidden"
-        style={{ width: `${dividerX}%` }}
+        className="absolute inset-0 overflow-hidden transition-all duration-300 ease-out"
+        style={{
+          clipPath: `inset(0 ${100 - dividerX}% 0 0)`,
+          WebkitClipPath: `inset(0 ${100 - dividerX}% 0 0)`,
+        }}
       >
         <Image
           priority
-          src={leftImage.responsiveImage.src}
-          alt={leftImage.responsiveImage.alt || 'Naked eye view'}
-          width={leftImage.responsiveImage.width}
-          height={leftImage.responsiveImage.height}
-          className="h-full w-full object-cover"
+          src={nakedEyeImage.responsiveImage.src}
+          alt={nakedEyeImage.responsiveImage.alt || 'Naked eye view'}
+          width={nakedEyeImage.responsiveImage.width}
+          height={nakedEyeImage.responsiveImage.height}
+          className="w-full h-full object-cover"
         />
+
+        {/* Label: Naked eye */}
+        <span className="absolute bottom-15 left-15 text-white text-3xl font-bold">
+          Naked eye.
+        </span>
       </div>
 
-      {/* Divider + Handle */}
+      {/* Divider handle */}
       <div
-        onMouseDown={handleMouseDown}
-        className="absolute top-0 bottom-0 cursor-grab active:cursor-grabbing flex flex-col items-center"
+        className="absolute top-0 bottom-0 flex flex-col items-center transition-all duration-300 ease-out"
         style={{
           left: `${dividerX}%`,
           transform: 'translateX(-50%)',
         }}
       >
-        <Divider orientation="vertical" className="w-0.5 bg-white h-full" />
-        {/* Circle handle */}
-        <div className="absolute top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white shadow-md border border-gray-300 flex items-center justify-center">
+        <Divider orientation="vertical" className="h-full" />
+        {/* Only the circle is draggable */}
+        <div
+          onMouseDown={handleMouseDown}
+          className="absolute top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white/60 shadow-md border border-gray-300 flex items-center justify-center cursor-grab active:cursor-grabbing"
+        >
           <div className="w-2 h-2 rounded-full bg-gray-500" />
         </div>
-      </div>
-
-      {/* Right (scene) */}
-      <div
-        className="h-full overflow-hidden"
-        style={{ width: `${100 - dividerX}%` }}
-      >
-        <Image
-          priority
-          src={rightImage.responsiveImage.src}
-          alt={rightImage.responsiveImage.alt || 'Scene view'}
-          width={rightImage.responsiveImage.width}
-          height={rightImage.responsiveImage.height}
-          className="h-full w-full object-cover"
-        />
       </div>
     </div>
   )

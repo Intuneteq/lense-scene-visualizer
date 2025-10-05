@@ -1,52 +1,29 @@
 'use client'
 
-import useSWR from 'swr'
-import React, { useMemo } from 'react'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import React from 'react'
+import { usePathname, useRouter } from 'next/navigation'
 
 import Selector from './Selector'
 import { Lense } from '@models/lense.model'
-import { getLenses } from '@actions/lenses.action'
-import { searchParamsSchema } from '@utils/validations'
 
 type Props = {
-   initialSku?: string;
-   initialScene?: string;
+   sku: string
+   scene: string
+   lenses: Lense[]
 }
 
-export default function LenseSceneControl({ initialSku, initialScene }: Props) {
+export default function LenseSceneControl({ sku, scene, lenses }: Props) {
    const router = useRouter()
    const pathname = usePathname()
-   const searchParams = useSearchParams()
 
-   // Now, merge live client params (reactive) with server initial values (stable).
-   // This way:
-   // - On first render → uses server defaults (SSR-safe).
-   // - After hydration → automatically syncs with actual client URL.
-   const paramsObj = useMemo(
-      () => ({
-         sku: searchParams?.get("sku") || initialSku,
-         sceneType: searchParams?.get("sceneType") || initialScene,
-      }),
-      [searchParams, initialScene, initialSku]
-   );
+   const lensesOptions = lenses.map((lense) => ({ key: lense.sku, label: lense.name }))
 
-   const parsed = searchParamsSchema.safeParse(paramsObj)
-   const selectedLense = parsed.data?.sku
-   const selectedScene = parsed.data?.sceneType
-
-   const { data, isLoading } = useSWR<Lense[]>(`/lenses`, getLenses)
-   const lensesOptions = data?.map((lense) => ({ key: lense.sku, label: lense.name })) || []
-
-   // Update URL as the single source of truth
-   // - router.replace keeps navigation shallow (no new history entry)
-   // - ensures URL always matches current state
    function handleSelectLense(key: string) {
-      router.replace(`${pathname}?sku=${key}&sceneType=${selectedScene || 'Mountain'}`)
+      router.replace(`${pathname}?sku=${key}&sceneType=${scene || 'Mountain'}`, { scroll: false })
    }
 
    function handleSelectScene(sceneType: string) {
-      router.replace(`${pathname}?sku=${selectedLense}&sceneType=${sceneType}`)
+      router.replace(`${pathname}?sku=${sku}&sceneType=${sceneType}`, { scroll: false })
    }
 
    return (
@@ -54,19 +31,18 @@ export default function LenseSceneControl({ initialSku, initialScene }: Props) {
          <Selector
             id="lenses"
             name="lenses"
-            value={selectedLense}
-            placeholder='Select Lense'
+            value={sku}
+            placeholder="Select Lense"
             options={lensesOptions}
             onChange={handleSelectLense}
-            isLoading={isLoading}
          />
 
          <Selector
             id="scene"
             name="scene"
-            placeholder='Select Scene'
-            value={selectedScene}
-            options={selectedLense ? scenesOptions : []}
+            placeholder="Select Scene"
+            value={scene}
+            options={lensesOptions.length > 0 ? scenesOptions : []}
             onChange={handleSelectScene}
          />
       </section>

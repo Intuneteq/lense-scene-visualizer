@@ -1,6 +1,9 @@
 import React from 'react'
 
+import { redirect, RedirectType } from 'next/navigation';
 import { LenseSceneControl } from '@components'
+
+import { getLenses } from '@actions/lenses.action';
 import { searchParamsSchema } from '@utils/validations';
 
 type Props = {
@@ -8,15 +11,31 @@ type Props = {
 }
 
 export default async function ControlsPage({ searchParams }: Props) {
-  // Initial values for the controls
-  // This prevents hydration mismatches (server and client rendering different initial values).
   const { sku, sceneType } = await searchParams
-
-  // Parse server-provided "initial" values
-  // This ensure hydration is consistent with the HTML rendered on the server.
   const initialParsed = searchParamsSchema.safeParse({ sku, sceneType });
 
-  // Pass them down as "initial" props to the client component
-  // These act as SSR-safe defaults before `useSearchParams` becomes available on the client.
-  return <LenseSceneControl initialSku={initialParsed.data?.sku} initialScene={initialParsed.data?.sceneType} />
+  const lenses = await getLenses()
+
+  if (lenses.length <= 0) {
+    return (
+      <LenseSceneControl
+        sku=''
+        scene=''
+        lenses={[]}
+      />
+    )
+  }
+
+  // No initial value in route param
+  if (!initialParsed.data?.sku) {
+    redirect(`/?sku=${lenses[0].sku}&sceneType=${'Mountain'}`, RedirectType.replace) // set initial values
+  }
+
+  return (
+    <LenseSceneControl
+      sku={initialParsed.data?.sku || ''}
+      scene={initialParsed.data?.sceneType || ''}
+      lenses={lenses}
+    />
+  )
 }

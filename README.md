@@ -27,7 +27,7 @@ The project is already configured to run on **localhost:3000**.
 If needed, you can adjust the values in your `.env.local` file:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
 ```
 
 > ⚠️ Make sure your `.env.local` file exists in the root directory.
