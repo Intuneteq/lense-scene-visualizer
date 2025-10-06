@@ -32,7 +32,7 @@ export default function ImageCompare({ nakedEyeImage, seceneImage }: Props) {
 
     const rect = containerRef.current.getBoundingClientRect()
     const x = e.clientX - rect.left
-    const newPercentage = Math.max(5, Math.min(100, (x / rect.width) * 100))
+    const newPercentage = Math.max(5, Math.min(95, (x / rect.width) * 100))
     setDividerX(newPercentage)
   }
 
@@ -40,7 +40,7 @@ export default function ImageCompare({ nakedEyeImage, seceneImage }: Props) {
     if (!containerRef.current) return
     const rect = containerRef.current.getBoundingClientRect()
     const x = e.clientX - rect.left
-    const newPercentage = Math.max(5, Math.min(100, (x / rect.width) * 100))
+    const newPercentage = Math.max(5, Math.min(95, (x / rect.width) * 100))
     setDividerX(newPercentage)
   }
 
@@ -101,7 +101,7 @@ export default function ImageCompare({ nakedEyeImage, seceneImage }: Props) {
         }}
       >
         <Divider orientation="vertical" className="h-full" />
-        {/* Only the circle is draggable */}
+    
         <div
           onMouseDown={handleMouseDown}
           className="absolute top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white/60 shadow-md border border-gray-300 flex items-center justify-center cursor-grab active:cursor-grabbing"
