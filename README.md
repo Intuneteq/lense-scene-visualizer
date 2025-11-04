@@ -143,9 +143,10 @@ This modular structure allows incremental data loading — only fetching what’
 ---
 
 ## 🧾 Reflection
-The process reaffirmed how **Next.js excels as a full-stack framework**, and how thoughtful structure (validation, modularization, and type safety) can elevate even small projects into maintainable, production-quality builds. I focused on architectural clarity, clean data flow, and a smooth user experience.
+
+The process reaffirmed how **Next.js excels as a full-stack framework**, and how thoughtful structure (validation, modularization, and type safety) can elevate even small projects into maintainable, production-quality builds.
 
 ---
 
-**🔗 Demo:** [https://lens-scene-visualizer.intunteq.com](#)
-**💻 Source:** [https://github.com/Intuneteq/lense-scene-visualizer](#)
+**🔗 Demo:** [https://lens-scene-visualizer.intunteq.com](https://lens-scene-visualizer.intunteq.com)
+**💻 Source:** [Github](https://github.com/Intuneteq/lense-scene-visualizer)
