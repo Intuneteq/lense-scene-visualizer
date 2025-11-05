@@ -14,8 +14,51 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SunGod Mvp",
-  description: "Full Stack Developer Coding Task",
+  title: "SunGod Lens Visualizer",
+  description: "An interactive product visualization experience that lets users explore and preview SunGod lens and frame combinations in real time. Built with Next.js, TypeScript, and Tailwind CSS.",
+  keywords: [
+    "SunGod",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Lens Visualizer",
+    "3D Product Visualization",
+    "Frontend Development",
+    "Backend Integration",
+  ],
+  authors: [
+    { name: "Tobi Olanitori", url: "https://intuneteq.com" },
+  ],
+  openGraph: {
+    title: "SunGod Lens Visualizer",
+    description: "An immersive interface for customizing and previewing SunGod eyewear combinations in real time.",
+    url: "https://lens-scene-visualizer.intuneteq.com/",
+    siteName: "Tobi Olanitori | Portfolio",
+    images: [
+      {
+        url: "/og-sungod-preview.png",
+        width: 1200,
+        height: 630,
+        alt: "SunGod Lens Visualizer preview",
+      },
+    ],
+    locale: "en_GB",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SunGod Lens Visualizer",
+    description: "A responsive product visualization app for SunGod eyewear, built with Next.js and TypeScript.",
+    creator: "@tune_orisa",
+    images: ["/og-sungod-preview.png"],
+  },
+  themeColor: "#111827",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
+  category: "portfolio",
 };
 
 type Props = {
